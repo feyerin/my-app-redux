@@ -1,38 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './product.css'
 import { fetchProduct } from './productSlice';
 
-export function Product() {
-    const [product, setProduct] = useState([]);
+export default class Product extends Component {
+    constructor(props){
+        super(props);
 
-    const dispatch = useDispatch();
-    dispatch(fetchProduct());
+        this.onProductListHandler = this.onProductListHandler.bind(this)
+    }
 
-    const productList = useSelector(state => state.product);
-
-    useEffect(() => {
-        setProduct(productList.productList)
-    }, [productList.productList]);
-    
-    console.log(product)
-
-    const onProductListHandler = () => {
-        return product.map((prd) => (
+    onProductListHandler() {
+        return 
               <div className="column">
                  <div className="card">
-                <img src={prd.imageUrl} alt='no' className='img'/>
-                <p>{prd.text}</p>
-                <p>{prd.id}</p>
+                <img src="https://react.semantic-ui.com/images/wireframe/image.png" alt='no' className='img'/>
+                <p>product name</p>
+                <p>product price</p>
                 </div>
              </div>  
-        ));
-     };
+    };
 
-    return(
-        <div className="row">
-            {onProductListHandler()}
+    render() {
+        return (
+            <div className="row">
+            {this.onProductListHandler()}
             {/* <div className="column">
                 <div className="card">
                 <img src='https://react.semantic-ui.com/images/wireframe/image.png' alt='no' className='img'/>
@@ -41,7 +34,7 @@ export function Product() {
                 </div>
             </div>    */}
         </div>
-    )
+        )
+    }
 }
 
-export default Product;

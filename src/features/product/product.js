@@ -1,40 +1,68 @@
-import React, { useState, useEffect, Component } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
+import {bindActionCreators} from '@reduxjs/toolkit';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {getProducts} from './action';
+import { ADD_DATA } from '../types' 
 import './product.css'
-import { fetchProduct } from './productSlice';
 
-export default class Product extends Component {
-    constructor(props){
+
+class Product extends Component {
+    constructor(props) {
         super(props);
-
-        this.onProductListHandler = this.onProductListHandler.bind(this)
     }
 
-    onProductListHandler() {
-        return 
-              <div className="column">
-                 <div className="card">
-                <img src="https://react.semantic-ui.com/images/wireframe/image.png" alt='no' className='img'/>
-                <p>product name</p>
-                <p>product price</p>
-                </div>
-             </div>  
-    };
+    componentDidMount() {
+        this.props.getProducts();
+    }
 
     render() {
+        const {product} = this.props.product;
         return (
             <div className="row">
-            {this.onProductListHandler()}
-            {/* <div className="column">
-                <div className="card">
-                <img src='https://react.semantic-ui.com/images/wireframe/image.png' alt='no' className='img'/>
-                <p>nama</p>
-                <p>harga</p>
-                </div>
-            </div>    */}
-        </div>
+                {
+                    product.map((prd) => (
+                        <div className="column">
+                            <div 
+                                key={prd.id}
+                                className="card"
+                                onClick= { () => 
+                                    this.props.addCart(
+                                        prd.id,
+                                        prd.name,
+                                        prd.price,
+                                        prd.imageUrl
+                                    )}
+                            >
+                                <img src={prd.imageUrl} alt='no' className='img'/>
+                                <p>{prd.name}</p>
+                                <p>Rp. {prd.price}</p>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {product: state.product};
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProducts: bindActionCreators(getProducts, dispatch),
+        addCart: ( id, name, price, imageUrl) => 
+        dispatch({
+            type: ADD_DATA,
+            payload: {
+                id: id,
+                name: name,
+                price: price,
+                url: imageUrl
+            }
+        })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

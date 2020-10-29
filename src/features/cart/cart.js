@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import './cart.css'
+import React, { Component } from 'react';
+import './cart.css';
+import {connect} from 'react-redux';
 
-export default class Cart extends Component {
+
+class Cart extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -9,12 +11,20 @@ export default class Cart extends Component {
         }
     }
     render(){
-        const amount = this.state.amount
+        const counter = this.props.counter;
+        console.log('counter', counter)
         return(
             <div className='segment'>
-                <span> cart ({amount})</span>
+                <span> cart ({counter})</span>
             </div>
         )
 
     }
 }
+
+const mapStateToProps = state => {
+    console.log('map to props',state.product.counter)
+    return {counter: state.product.counter};
+};
+
+export default connect(mapStateToProps)(Cart);

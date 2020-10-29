@@ -2,14 +2,11 @@ import {bindActionCreators} from '@reduxjs/toolkit';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getProducts} from './action';
-import { ADD_DATA } from '../types' 
+import { ADD_DATA, ADD_COUNTER } from '../types' 
 import './product.css'
 
 
 class Product extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.getProducts();
@@ -21,7 +18,9 @@ class Product extends Component {
             <div className="row">
                 {
                     product.map((prd) => (
-                        <div className="column">
+                        <div onClick={ () => 
+                            this.props.addCounter() 
+                            } className="column">
                             <div 
                                 key={prd.id}
                                 className="card"
@@ -59,7 +58,15 @@ const mapDispatchToProps = (dispatch) => {
                 id: id,
                 name: name,
                 price: price,
-                url: imageUrl
+                url: imageUrl,
+                counter: 1
+            }
+        }),
+        addCounter: () => 
+        dispatch({
+            type: ADD_COUNTER,
+            payload: {
+                counter: 1
             }
         })
     }

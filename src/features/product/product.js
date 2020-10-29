@@ -1,7 +1,7 @@
 import {bindActionCreators} from '@reduxjs/toolkit';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getProducts} from './action';
+import {getProducts, getProductsAsync} from './action';
 import { ADD_DATA, ADD_COUNTER } from '../types' 
 import './product.css'
 
@@ -50,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProducts: bindActionCreators(getProducts, dispatch),
+        getProducts: bindActionCreators(getProductsAsync, dispatch),
         addCart: ( id, name, price, imageUrl) => 
         dispatch({
             type: ADD_DATA,

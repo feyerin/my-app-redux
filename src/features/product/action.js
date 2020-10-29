@@ -16,3 +16,18 @@ export const getProducts = () => async (dispatch) => {
     }
 }
 
+export const getProductsAsync = () => (dispatch, getState) =>{
+    axios.get('https://run.mocky.io/v3/27221b73-ef6c-47fa-994b-e9e6cd692641')
+    .then(resp => {
+        dispatch({
+            type: GET_DATA,
+            payload: resp.data,
+        });
+    })
+    .catch(err => {
+        dispatch({
+            type:ERROR_DATA,
+            payload: console.log(err)
+        })
+    });}
+

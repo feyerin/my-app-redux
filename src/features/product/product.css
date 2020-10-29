@@ -46,3 +46,32 @@
   .img {
       width: 100%;
   }
+
+  .loading-prop {
+    margin: auto;
+    width: 20%;
+  }
+
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #27d3d3	;
+    /* border-right: 5px solid green; */
+    border-bottom: 5px solid #27d3d3	;
+    /* border-left: 5px solid yellow; */
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+    opacity: 1;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

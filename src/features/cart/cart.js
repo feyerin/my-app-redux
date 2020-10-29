@@ -12,7 +12,6 @@ class Cart extends Component {
     }
     render(){
         const counter = this.props.counter;
-        console.log('counter', counter)
         return(
             <div className='segment'>
                 <span> cart ({counter})</span>
@@ -23,7 +22,6 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('map to props',state.product.counter)
     return {counter: state.product.counter};
 };
 

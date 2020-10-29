@@ -1,10 +1,11 @@
-import { GET_DATA, ADD_DATA, ADD_COUNTER } from '../types'
+import { GET_DATA, ADD_DATA, ADD_COUNTER, RESET, IS_LOADING } from '../types'
 
 const initialState = {
     product: [],
     cart: [],
     counter: 0,
-    totalPrice: 0
+    totalPrice: 0,
+    isLoading: false
 };
 
 export default function (state = initialState, action) {
@@ -12,7 +13,7 @@ export default function (state = initialState, action) {
         case GET_DATA:
         return {
             ...state,
-            product: action.payload
+            product: action.payload,
         }
         case ADD_DATA:
         const currentState = state.cart;
@@ -22,7 +23,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 cart: [...state.cart, action.payload],
-                totalPrice: state.totalPrice + action.payload.price
+                totalPrice: state.totalPrice + action.payload.price,
             } 
         } else {
             const existingItem = Object.assign({}, newCart);
@@ -39,14 +40,19 @@ export default function (state = initialState, action) {
         case ADD_COUNTER:
             return {
                 ...state,
-                counter: state.counter + 1
+                counter: state.counter + 1,
             }
-        case "RESET":
+        case RESET:
             return {
                 ...state,
                 counter: 0,
                 totalPrice:0,
-                cart:[]
+                cart:[],
+            }
+        case IS_LOADING:
+            return {
+                ...state,
+                isLoading: action.payload
             }
         default:
             return state;

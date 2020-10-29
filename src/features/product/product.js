@@ -1,7 +1,7 @@
 import {bindActionCreators} from '@reduxjs/toolkit';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getProducts, getProductsAsync} from './action';
+import {getProductsAsync} from './action';
 import { ADD_DATA, ADD_COUNTER } from '../types' 
 import './product.css'
 
@@ -14,9 +14,16 @@ class Product extends Component {
 
     render() {
         const {product} = this.props.product;
+        console.log("is loading", this.props.isLoading)
         return (
             <div className="row">
                 {
+                    this.props.isLoading && 
+                    <div className="">
+                        <div className="loading-prop loader"></div>
+                    </div>
+                }
+                { !this.props.isLoading &&
                     product.map((prd) => (
                         <div onClick={ () => 
                             this.props.addCounter() 
@@ -45,7 +52,7 @@ class Product extends Component {
 }
 
 const mapStateToProps = state => {
-    return {product: state.product};
+    return {product: state.product, isLoading: state.product.isLoading};
 };
 
 const mapDispatchToProps = (dispatch) => {
